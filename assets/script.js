@@ -6,14 +6,28 @@ var score = 100;
 var count = 0;
 var timer = document.querySelector("#timer");
 var timeRemaining = 100;
-var quiz = [{
-    question: "What is JavaScript?",
-    options: ["1. A programming language used to make websites more interactive.", "2. A text editor used to write code","3. A type of coffee popular among developers","4. <script>"],
-    answer: "4. <script>"},
+var quiz = [
+    
+    {question: "Which does the .pop method accomplish?",
+    options: ["1. Inserts an element to the end of an array", "2. Removes the last element in an array","3. Creates a new array with the values you defined","4. Prevents event bubbling"],
+    answer: "2. Removes the last element in an array"},
 
-    { question: "How many planets in the solar system",
-    options: ["100", "20","9","8"],
-    answer: "9"},
+    { question: "If var states = [''Utah'', ''Arizona'', ''Florida'', ''Arkansas'']; what is the value of states[1]?",
+    options: ["1. Florida", "2. Utah","3. Arizona","4. None of the above"],
+    answer: "3. Arizona"},
+
+    { question: "Which of the following is NOT a primitive type?",
+    options: ["1. Variable", "2. Boolean","3. Number","4. Undefined"],
+    answer: "1. Variable"},
+
+    { question: "What is the purpose of a for-loop?",
+    options: ["1. For creating variable values that loop", "2. To declare a new variable if certain conditions are met","3. It is a specific kind of function","4. To execute code more than once as long as certain conditions are met"],
+    answer: "4. To execute code more than once as long as certain conditions are met"},
+
+    { question: "For best practices, where is the best place to link your JS file in HTML?",
+    options: ["1. In the head, just like CSS", "2. At the end of the body","3. At the beginning of body","4. JavaScrip is not linked through the HTML file"],
+    answer: "2. At the end of the body"},
+
 ];
 
     
