@@ -7,7 +7,9 @@ var count = 0;
 var timer = document.querySelector("#timer");
 var timeRemaining = 100;
 var playerName = document.querySelector("#player-name");
+var initials = document.querySelector("#initials");
 var submit = document.querySelector("#submit");
+var highScores = document.querySelector("#highScores")
 var quiz = [
   {
     question: "Which does the .pop method accomplish?",
@@ -147,4 +149,30 @@ function win() {
   playerName.setAttribute("style", "display: block");
 };
 
+
+
+  submit.addEventListener('click', function (event) {
+    event.preventDefault();
+    var timestamp = Date.now();
+     var session = {
+       initials: initials.value,
+       score: score.valueOf()
+     };
+    localStorage.setItem("session" + timestamp, JSON.stringify(session));
+
+    location.reload();
+  });
+
+highScores.addEventListener('click', function(event){
+event.preventDefault; 
+  start.setAttribute("style", "display: none");
+  scoreContent();
+
+});
+
+
+function scoreContent() {
+  var compiledScores = JSON.parse(localStorage.getItem("session"));
+  document.querySelector("#scoresContent").textContent = compiledScores.initials + compiledScores.score
+};
 
