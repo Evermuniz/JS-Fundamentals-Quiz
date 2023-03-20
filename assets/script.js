@@ -9,7 +9,8 @@ var timeRemaining = 100;
 var playerName = document.querySelector("#player-name");
 var initials = document.querySelector("#initials");
 var submit = document.querySelector("#submit");
-var highScores = document.querySelector("#highScores")
+var highScores = document.querySelector("#highScores");
+var player = [];
 var quiz = [
   {
     question: "Which does the .pop method accomplish?",
@@ -138,7 +139,7 @@ function lose() {
   container.innerHTML = "";
   var lose = document.createElement("h2");
   container.appendChild(lose);
-  lose.textContent = "You Lost";
+  lose.textContent = "Time's Up";
 };
 
 function win() {
@@ -149,16 +150,14 @@ function win() {
   playerName.setAttribute("style", "display: block");
 };
 
-
-
   submit.addEventListener('click', function (event) {
     event.preventDefault();
-    var timestamp = Date.now();
      var session = {
        initials: initials.value,
        score: score.valueOf()
      };
-    localStorage.setItem("session" + timestamp, JSON.stringify(session));
+     player.push(session);
+    localStorage.setItem("session", JSON.stringify(player));
 
     location.reload();
   });
@@ -172,7 +171,8 @@ event.preventDefault;
 
 
 function scoreContent() {
-  var compiledScores = JSON.parse(localStorage.getItem("session"));
-  document.querySelector("#scoresContent").textContent = compiledScores.initials + compiledScores.score
-};
+  for (var i = 0; i < localStorage.length; i++) {
+    var compiledScores = JSON.parse(localStorage.getItem("session"));
+    document.querySelector("#scoresContent").textContent = compiledScores.initials + compiledScores.score;
+  };}
 

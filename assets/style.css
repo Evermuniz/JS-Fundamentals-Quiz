@@ -2,4 +2,24 @@
     display: none
 }
 
+#timer {
+    display: flex;
+    justify-content: end;
+}
 
+
+
+#container {
+    display: flex;
+    justify-content: center;
+}
+
+
+li {
+    width: 300px;
+}
+
+li:hover{
+opacity: 80%;
+cursor:pointer;
+}
