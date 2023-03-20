@@ -23,11 +23,28 @@ li {
 }
 
 li:hover{
-opacity: 80%;
+opacity: 70%;
 cursor:pointer;
 }
 
 #button-container{ 
     display: flex;
     justify-content: center;
+}
+
+#startOver{
+    display: none;
+}
+
+#scoresBox{
+    display: flex;
+    justify-content: center;
+}
+
+#highScores{
+     text-decoration: underline;
+}
+
+#highScores:hover{
+    cursor: pointer;
 }

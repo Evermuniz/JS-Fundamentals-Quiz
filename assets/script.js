@@ -1,17 +1,18 @@
-var body = document.body;
-var header = document.querySelector("#header");
+//declaring most of the gloabal variables to be used throughout the code. Primarily using ID's to select elements in HTML
+var header = document.querySelector("#header"); 
 var container = document.querySelector("#container");
 var h1El = document.createElement("h1");
-var score = 100;
-var count = 0;
+var score = 100; //This variable is used for the score tracking
+var count = 0; //This variable is used to rotate through the questions
 var timer = document.querySelector("#timer");
-var timeRemaining = 60;
+var timeRemaining = 60; //this variable is used for the timer countdown
 var playerName = document.querySelector("#player-name");
 var initials = document.querySelector("#initials");
 var submit = document.querySelector("#submit");
 var highScores = document.querySelector("#highScores");
-var highscore = [];
-var quiz = [
+var highscore = []; //this is used for the local storage
+var startOver = document.querySelector("#startOver");
+var quiz = [ //all the sets of questions, options, and answers are in this array as objects
   {
     question: "Which does the .pop method accomplish?",
     options: [
@@ -58,25 +59,26 @@ var quiz = [
   },
 ];
 
-h1El.textContent = "JavaScript Fundamentals Quiz";
-header.appendChild(h1El);
+h1El.textContent = "JavaScript Fundamentals Quiz"; //Added the header text through JS
+header.appendChild(h1El); //appending the h1 element to the header
 
-function begin() {
-  container.innerHTML = "";
+function begin() { // this is the main function to rotate through questions, keep track of score and timer
+  container.innerHTML = ""; //resetting the content whenever this function runs
 
-  start.setAttribute("style", "display: none");
+  start.setAttribute("style", "display: none"); //hiding the Begin Quiz button when the function begins
 
-  var question1 = quiz[count].question;
+  //using the count variable stated above to rotate through the questions and options
+  var question1 = quiz[count].question; 
   var options1 = quiz[count].options;
-  var ul = document.createElement("ul");
+  var ul = document.createElement("ul"); //created a ul element for the list of questions
 
-  container.appendChild(ul);
-  ul.textContent = question1;
+  container.appendChild(ul); //appending UL to the container
+  ul.textContent = question1; //assigning the first question to be displayed in the ul
 
-  for (var j = 0; j < options1.length; j++) {
-    var li = document.createElement("li");
-    li.textContent = options1[j];
-    ul.appendChild(li);
+  for (var j = 0; j < options1.length; j++) { //adding a loop to create an option for every answer option in the same bank of questions
+    var li = document.createElement("li"); //creating a new li element
+    li.textContent = options1[j]; //adding the option text to li element
+    ul.appendChild(li); //appending the li element to 
     li.setAttribute("style", "background-color: red;");
     ul.setAttribute("style", "list-style: none;");
     li.style.margin = "5px";
@@ -164,7 +166,7 @@ function win() {
 
     localStorage.setItem("session", JSON.stringify(highscore));
 
-   //location.reload();
+   location.reload();
   });
 
 highScores.addEventListener('click', function(event){
@@ -173,15 +175,20 @@ event.preventDefault;
   scoreContent();
 });
 
-
+var compiledScores = JSON.parse(localStorage.getItem("session"));
 function scoreContent() {
-  for (var i = 0; i < localStorage.length; i++) {
-    var compiledScores = JSON.parse(localStorage.getItem("session"))[i];
+  highScores.setAttribute('style', 'display: none');
+  startOver.setAttribute('style', 'display: block');
+  for (var i = 0; i < compiledScores.length; i++) {
+  var storedData = JSON.parse(localStorage.getItem("session"))[i];
     console.log(compiledScores);
     var li = document.createElement("li");
-    li.textContent = "Player Initials: " + compiledScores.initials + "Score" + compiledScores.score;
-    li.setAttribute("data-index", i);
+    li.textContent = "Player Initials: " + storedData.initials + ".    " + "Score: " + storedData.score;
     document.querySelector("#scoresContent").appendChild(li);
-    //document.querySelector("#scoresContent").textContent = compiledScores.initials;
   };}
+
+startOver.addEventListener('click', function (event){
+location.reload();
+
+});
 
