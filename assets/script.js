@@ -5,12 +5,12 @@ var h1El = document.createElement("h1");
 var score = 100;
 var count = 0;
 var timer = document.querySelector("#timer");
-var timeRemaining = 100;
+var timeRemaining = 60;
 var playerName = document.querySelector("#player-name");
 var initials = document.querySelector("#initials");
 var submit = document.querySelector("#submit");
 var highScores = document.querySelector("#highScores");
-var player = [];
+var highscore = [];
 var quiz = [
   {
     question: "Which does the .pop method accomplish?",
@@ -128,11 +128,9 @@ function displayScore() {
 var start = document.querySelector(".start-button");
 
 start.addEventListener("click", () => {
-  begin();
   startTimer();
-  {
-    console.log(count);
-  }
+  begin();
+
 });
 
 function lose() {
@@ -146,7 +144,7 @@ function win() {
   container.innerHTML = "";
   var win = document.createElement("h2");
   container.appendChild(win);
-  win.textContent = "You're final score was: " + score + "%";
+  win.textContent = "Your final score was: " + score + "%";
   playerName.setAttribute("style", "display: block");
 };
 
@@ -156,23 +154,34 @@ function win() {
        initials: initials.value,
        score: score.valueOf()
      };
-     player.push(session);
-    localStorage.setItem("session", JSON.stringify(player));
 
-    location.reload();
+     var storedData = JSON.parse(localStorage.getItem("session"));
+       if (storedData !== null){
+        highscore = storedData;
+      };
+
+    highscore.push(session);
+
+    localStorage.setItem("session", JSON.stringify(highscore));
+
+   //location.reload();
   });
 
 highScores.addEventListener('click', function(event){
 event.preventDefault; 
   start.setAttribute("style", "display: none");
   scoreContent();
-
 });
 
 
 function scoreContent() {
   for (var i = 0; i < localStorage.length; i++) {
-    var compiledScores = JSON.parse(localStorage.getItem("session"));
-    document.querySelector("#scoresContent").textContent = compiledScores.initials + compiledScores.score;
+    var compiledScores = JSON.parse(localStorage.getItem("session"))[i];
+    console.log(compiledScores);
+    var li = document.createElement("li");
+    li.textContent = "Player Initials: " + compiledScores.initials + "Score" + compiledScores.score;
+    li.setAttribute("data-index", i);
+    document.querySelector("#scoresContent").appendChild(li);
+    //document.querySelector("#scoresContent").textContent = compiledScores.initials;
   };}
 

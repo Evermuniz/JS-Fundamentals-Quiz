@@ -7,7 +7,10 @@
     justify-content: end;
 }
 
-
+h1 {
+    display: flex;
+    justify-content: center;
+}
 
 #container {
     display: flex;
@@ -22,4 +25,9 @@ li {
 li:hover{
 opacity: 80%;
 cursor:pointer;
+}
+
+#button-container{ 
+    display: flex;
+    justify-content: center;
 }
