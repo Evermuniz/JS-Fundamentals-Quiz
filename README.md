@@ -15,7 +15,7 @@ I was not provided with any code for this project and had to create a page with 
 
 [Click on this link to visit the deployed application](https://evermuniz.github.io/Ever-Muniz-JS-Fundamentals-Quiz/)
 
-![JS quiz page screenshot](./02-Challenge/Assets/03-javascript-homework-demo.png)
+![JS quiz page screenshot](./assets/page-screenshot.jpeg)
 
 ## Credits
 
