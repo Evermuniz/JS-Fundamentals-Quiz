@@ -1,50 +1,50 @@
-#player-name {
+ #player-name { /*defulting the box asking for player initials not to display */
     display: none
 }
 
-#timer {
+#timer { /*positioning the timer*/
     display: flex;
     justify-content: end;
 }
 
-h1 {
+h1 { /*aligning the h1 element to center*/
     display: flex;
     justify-content: center;
 }
 
-#container {
+#container { /*justifying container content to center*/
     display: flex;
     justify-content: center;
 }
 
 
-li {
+li { /*limiting the width of question options*/
     width: 300px;
 }
 
-li:hover{
+li:hover{ /*adding a pseudo class to change opacity and pointer when an answer is hovered*/
 opacity: 70%;
 cursor:pointer;
 }
 
-#button-container{ 
+#button-container{  /*positioning for the start button*/
     display: flex;
     justify-content: center;
 }
 
-#startOver{
+#startOver{ /* default display for go back button to not be visible*/
     display: none;
 }
 
-#scoresBox{
+#scoresBox{ /*positioning for the user and score information when viewed*/
     display: flex;
     justify-content: center;
 }
 
-#highScores{
+#highScores{ /*underline text so users know it's a link*/
      text-decoration: underline;
 }
 
-#highScores:hover{
+#highScores:hover{ /*change pointer when the link is hovered over*/
     cursor: pointer;
 }

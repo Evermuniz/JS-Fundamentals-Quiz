@@ -1,5 +1,5 @@
 //declaring most of the gloabal variables to be used throughout the code. Primarily using ID's to select elements in HTML
-var header = document.querySelector("#header"); 
+var header = document.querySelector("#header");
 var container = document.querySelector("#container");
 var h1El = document.createElement("h1");
 var score = 100; //This variable is used for the score tracking
@@ -10,9 +10,11 @@ var playerName = document.querySelector("#player-name");
 var initials = document.querySelector("#initials");
 var submit = document.querySelector("#submit");
 var highScores = document.querySelector("#highScores");
-var highscore = []; //this is used for the local storage
+var highscore = []; //the player initials and scores are pushed into this variable for local storage
 var startOver = document.querySelector("#startOver");
-var quiz = [ //all the sets of questions, options, and answers are in this array as objects
+var start = document.querySelector(".start-button");
+var quiz = [
+  //all the sets of questions, options, and answers are in this array as objects
   {
     question: "Which does the .pop method accomplish?",
     options: [
@@ -62,40 +64,44 @@ var quiz = [ //all the sets of questions, options, and answers are in this array
 h1El.textContent = "JavaScript Fundamentals Quiz"; //Added the header text through JS
 header.appendChild(h1El); //appending the h1 element to the header
 
-function begin() { // this is the main function to rotate through questions, keep track of score and timer
+function begin() {
+  // this is the main function to rotate through questions, keep track of score and timer
   container.innerHTML = ""; //resetting the content whenever this function runs
+  highScores.setAttribute("style", "display: none"); //removing the high scores link when quiz begins to avoid users from clicking
 
   start.setAttribute("style", "display: none"); //hiding the Begin Quiz button when the function begins
 
   //using the count variable stated above to rotate through the questions and options
-  var question1 = quiz[count].question; 
+  var question1 = quiz[count].question;
   var options1 = quiz[count].options;
   var ul = document.createElement("ul"); //created a ul element for the list of questions
 
   container.appendChild(ul); //appending UL to the container
   ul.textContent = question1; //assigning the first question to be displayed in the ul
 
-  for (var j = 0; j < options1.length; j++) { //adding a loop to create an option for every answer option in the same bank of questions
+  for (var j = 0; j < options1.length; j++) {
+    //adding a loop to create an option for every answer option in the same bank of questions
     var li = document.createElement("li"); //creating a new li element
     li.textContent = options1[j]; //adding the option text to li element
-    ul.appendChild(li); //appending the li element to 
-    li.setAttribute("style", "background-color: red;");
+    ul.appendChild(li); //appending the li element to the question in the ul
+    li.setAttribute("style", "background-color: red;"); //setting some styling for the list
     ul.setAttribute("style", "list-style: none;");
     li.style.margin = "5px";
 
     li.addEventListener("click", function (event) {
-      var selected = event.target.textContent;
-      var answer = quiz[count].answer;
-      count = count + 1;
-      console.log(count);
+      //creating an event listener when an li element is clicked
+      var selected = event.target.textContent; //defining a new variable to be the li variable that was clicked
+      var answer = quiz[count].answer; // creating a new variable to be the respective correct answer
+      count = count + 1; //adding 1 to the count variable to move to the next question
 
       if (selected !== answer) {
+        //if the selected option was incorrect then subtract time from the timer and remove 20 from the points
         score -= 20;
         timeRemaining -= 10;
-        console.log(score);
       }
 
       if (count > 4) {
+        //once the count is over 4, which is the limit for the number of 5 questions then run the win function, otherwise repeat the function
         win();
       } else if (count <= 4) {
         begin();
@@ -103,92 +109,95 @@ function begin() { // this is the main function to rotate through questions, kee
     });
   }
 }
+
 function startTimer() {
+  //this function starts the timer
   var interval = setInterval(function () {
     if (timeRemaining > 0) {
+      //if the timer is above 0 then keep subtracting down to 0
       timeRemaining--;
-      timer.textContent = timeRemaining + " seconds left";
+      timer.textContent = timeRemaining + " seconds left"; //display the timer plus text
 
       if (timeRemaining === 0) {
+        //if the timer runs out first then run the lose function
         lose();
-        clearInterval(interval);
       }
 
       if (count > 4) {
+        //stop the timer once all quiz questions have been answered
         clearInterval(interval);
       }
     }
-  }, 1000);
-};
+  }, 1000); //setting the timer interval to be 1 second
+}
 
-function displayScore() {
-  var finalScore = score;
-  localStorage.setItem("score", finalScore);
-  window.alert(finalScore);
-};
-
-var start = document.querySelector(".start-button");
-
-start.addEventListener("click", () => {
+start.addEventListener("click", function () {
+  //when the Begin Quiz button is clicked then the begin and startTimer functions are triggered
   startTimer();
   begin();
-
 });
 
 function lose() {
-  container.innerHTML = "";
-  var lose = document.createElement("h2");
-  container.appendChild(lose);
-  lose.textContent = "Time's Up";
-};
+  //This function is used when the timer runs out
+  container.innerHTML = ""; //clear the contents to stop displaying questions
+  var lose = document.createElement("h2"); //create a new element
+  container.appendChild(lose); //append the new h2 element to the container
+  lose.textContent = "Time's Up"; //text for the new h2 element
+  startOver.setAttribute("style", "display: block");//adding the go back button when time runs out
+}
 
 function win() {
-  container.innerHTML = "";
-  var win = document.createElement("h2");
-  container.appendChild(win);
-  win.textContent = "Your final score was: " + score + "%";
-  playerName.setAttribute("style", "display: block");
-};
+  //this is triggered when someone answers all questions before the time is up
+  container.innerHTML = ""; //clear the content to stop displaying the questions
+  var win = document.createElement("h2"); //create a new element and assign it to a variable
+  container.appendChild(win); //append the new element to the container
+  win.textContent = "Your final score was: " + score + "%"; //text to display final score
+  playerName.setAttribute("style", "display: block"); //display the text box for the user to input their initials
+}
 
-  submit.addEventListener('click', function (event) {
-    event.preventDefault();
-     var session = {
-       initials: initials.value,
-       score: score.valueOf()
-     };
+submit.addEventListener("click", function (event) {
+  // this function is triggered when the submit button is clicked for scores
+  event.preventDefault();
+  var session = {
+    //creating a new variable with an object to add to the local storage
+    initials: initials.value,
+    score: score.valueOf(),
+  };
 
-     var storedData = JSON.parse(localStorage.getItem("session"));
-       if (storedData !== null){
-        highscore = storedData;
-      };
+  var storedData = JSON.parse(localStorage.getItem("session")); //creating a new variable with the current local storage data
+  if (storedData !== null) {
+    //if there is content in the local storage then the highscore variable is equal to the stored data so we don't lose it
+    highscore = storedData;
+  }
 
-    highscore.push(session);
+  highscore.push(session); //push the content of the newly finished game to the highscore variable so it includes past and current info
 
-    localStorage.setItem("session", JSON.stringify(highscore));
+  localStorage.setItem("session", JSON.stringify(highscore)); //add all the content to local storage as a string
 
-   location.reload();
-  });
-
-highScores.addEventListener('click', function(event){
-event.preventDefault; 
-  start.setAttribute("style", "display: none");
-  scoreContent();
+  location.reload(); //reload the page to go home after submission
 });
 
-var compiledScores = JSON.parse(localStorage.getItem("session"));
+highScores.addEventListener("click", function (event) {
+  //adding an event listener to the high score list link
+  event.preventDefault;
+  start.setAttribute("style", "display: none"); //hiding the begin quiz button when viewing high scores
+  scoreContent(); //triggering the score content function below
+});
+
+var compiledScores = JSON.parse(localStorage.getItem("session")); //creating a new variable with the parsed local storage data
 function scoreContent() {
-  highScores.setAttribute('style', 'display: none');
-  startOver.setAttribute('style', 'display: block');
+  highScores.setAttribute("style", "display: none"); //hiding the link to view high scores to prevent users from viewing it
+  startOver.setAttribute("style", "display: block"); //displaying the start over button so users can navigate back to the main page
   for (var i = 0; i < compiledScores.length; i++) {
-  var storedData = JSON.parse(localStorage.getItem("session"))[i];
-    console.log(compiledScores);
-    var li = document.createElement("li");
-    li.textContent = "Player Initials: " + storedData.initials + ".    " + "Score: " + storedData.score;
-    document.querySelector("#scoresContent").appendChild(li);
-  };}
+    //adding a loop for all the objects in local storage
+    var storedData = JSON.parse(localStorage.getItem("session"))[i]; //getting items in an index for the loop to display all local storage object separately
+    var li = document.createElement("li"); //creating a new list item for each score and user
+    li.textContent = "Player Initials: " + storedData.initials + ".    " + "Score: " + storedData.score; //adding the text and content to li elements
+    document.querySelector("#scoresContent").appendChild(li); //appending it to a div in html to display
+  }
+}
 
-startOver.addEventListener('click', function (event){
-location.reload();
-
+startOver.addEventListener("click", function () {
+  //adding event listener to go back button to restart the page
+  location.reload();
 });
-
