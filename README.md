@@ -13,7 +13,7 @@ I was not provided with any code for this project and had to create a page with 
 - If you answer all the questions then you will be showed your score and prompted to enter your username to save
 - You can click on "View High Scores" to view all stored players and scores
 
-[Click on this link to visit the deployed application](https://evermuniz.github.io/Ever-Muniz-JS-Fundamentals-Quiz/)
+[Click on this link to visit the deployed application](https://evermuniz.github.io/JS-Fundamentals-Quiz/)
 
 ![JS quiz page screenshot](./page-screenshot.jpeg)
 
